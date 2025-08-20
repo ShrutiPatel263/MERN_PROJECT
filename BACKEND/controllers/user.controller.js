@@ -25,7 +25,7 @@ const generateAccessAndRefereshTokens = async (userId) =>{
 
 
 
-module.exports.registerUser = async (req, res,next) => {
+const registerUser = async (req, res,next) => {
      //Get details from fronted 
      //validate-->not empty
      //Check if user already exists
@@ -58,7 +58,7 @@ module.exports.registerUser = async (req, res,next) => {
         $or:[{userName},{email}]
     })
 
-     if(existedUser){
+     if(userExists){
     throw new ApiError(409,"User with email or username already exist")
     }
 
@@ -258,6 +258,7 @@ export {
     loginUser,
     logoutUser,
     refreshAccessToken,
-    forgotPassword
+    forgotPassword,
+    userProfile
 }
 

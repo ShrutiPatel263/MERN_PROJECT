@@ -18,7 +18,7 @@ const postschema= new mongoose.Schema({
         required: true,
     },
     interviewType:{
-        types: String,
+        type: String,
         required: true,
     },
     roundDetails:{
@@ -45,3 +45,5 @@ const postschema= new mongoose.Schema({
         type:String,
     }
 },{timestamps: true});
+
+export const Post = mongoose.model("Post", postschema);

@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
 
@@ -30,7 +31,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:true,
         enum: ['CSE', 'IT', 'ECE', 'EEE', 'MECH', 'CIVIL'], // Example branches
-    }
+    },
+    refreshToken: {
+    type: String
+   }
 
 }, {timestamps: true});
 
@@ -58,8 +62,8 @@ userSchema.methods.generateAccessToken=function(){
         {
             _id:this._id,
             email:this.email,
-            username:this.username,
-            fullname:this.fullname
+            userName:this.userName,
+            name:this.name
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
