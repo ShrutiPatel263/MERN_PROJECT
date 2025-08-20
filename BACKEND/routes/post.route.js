@@ -19,3 +19,5 @@ router.route('/deletepost/:postId').delete(verifyJWT, deletePost);
 router.route('/post/:postId').get(getPostById);
 
 export default router;
+
+
