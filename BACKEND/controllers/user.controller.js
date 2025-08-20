@@ -213,4 +213,40 @@ const logoutUser=asyncHandler(async (req,res) =>{
 
 })
 
+const forgotPassword = asyncHandler(async (req, res) => {
+
+    const {email,newPassword,confirmPassword} = req.body;
+
+    if(!email || !newPassword || !confirmPassword){
+        throw new ApiError(400, "Email, new password and confirm password are required");
+    }
+
+    if(newPassword !== confirmPassword){
+        throw new ApiError(400, "New password and confirm password do not match");
+    }
+
+    const user = await User.findOne({
+        email
+    })
+
+    if(!user){
+        throw new ApiError(404,"User not found");
+    }
+    user.password = newPassword;
+    
+    await user.save({validateBeforeSave :false})
+
+    return res.status(200).json(
+        new ApiResponse(200, {}, "Password updated successfully")
+    );
 })
+})
+
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    forgotPassword
+}
+
