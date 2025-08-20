@@ -136,7 +136,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
         "User logged in successfully"
       )
     )
-
+});
     
 const logoutUser=asyncHandler(async (req,res) =>{
   //Remove cookies
@@ -240,7 +240,8 @@ const forgotPassword = asyncHandler(async (req, res) => {
         new ApiResponse(200, {}, "Password updated successfully")
     );
 })
-})
+
+
 
 export {
     registerUser,

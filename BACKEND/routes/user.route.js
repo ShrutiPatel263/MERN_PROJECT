@@ -1,5 +1,7 @@
 const express=require('express');
 const router=express.Router();
+import { loginUser, logoutUser, changePassword } from '../controllers/user.controller.js';
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 //To validate the data we use express-validator package
 const { body,validationResult } = require('express-validator');
@@ -11,4 +13,13 @@ router.post('/register', [
     body('email').isEmail().withMessage('Please enter a valid email address').matches(/^[^\s@]+@vgecg\.ac\.in$/).withMessage('Please enter a valid vgecg.ac.in email'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
 ],userController.registerUser);
+
+router.route('/login').post(loginUser);
+
+router.route('/logout').post(verifyJWT,logoutUser);
+
+router.route('/change-password').post(changePassword);
+
+
+    
 module.exports = router;
