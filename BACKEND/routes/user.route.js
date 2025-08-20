@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-import { loginUser, logoutUser, changePassword } from '../controllers/user.controller.js';
+import { loginUser, logoutUser, changePassword,userProfile } from '../controllers/user.controller.js';
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 //To validate the data we use express-validator package
@@ -20,6 +20,6 @@ router.route('/logout').post(verifyJWT,logoutUser);
 
 router.route('/change-password').post(changePassword);
 
-
+router.route('/profile').get(verifyJWT, userProfile)
     
 module.exports = router;
