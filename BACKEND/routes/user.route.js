@@ -1,13 +1,12 @@
-// Fix imports:
 import express from 'express';
 import { registerUser, loginUser, logoutUser, forgotPassword, userProfile } from '../controllers/user.controller.js';
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { body, validationResult } from 'express-validator';
+import {Router} from "express";
 
 //To validate the data we use express-validator package
-const { body,validationResult } = require('express-validator');
+import { body, validationResult } from 'express-validator';
 
-const userController = require('../controllers/user.controller');
+const router=Router();
 
 router.post('/register', [
     body('name').isLength({ min: 3 }).withMessage('Name must be at least 3 characters long'),
@@ -17,10 +16,10 @@ router.post('/register', [
 
 router.route('/login').post(loginUser);
 
-router.route('/logout').post(verifyJWT,logoutUser);
+router.route('/logout').post(verifyJWT,logoutUser);  //Protected route
 
-router.route('/change-password').post(changePassword);
+router.route('/change-password').post(forgotPassword);
 
-router.route('/profile').get(verifyJWT, userProfile)
+router.route('/profile').get(verifyJWT, userProfile);  //Protected route
     
 module.exports = router;
