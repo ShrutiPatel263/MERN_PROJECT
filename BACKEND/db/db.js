@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 function connectDB() {
     mongoose.connect(process.env.MONGO_URI)
@@ -10,4 +10,4 @@ function connectDB() {
     });
 }
 
-module.exports = connectDB;
+export default connectDB;

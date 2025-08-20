@@ -1,6 +1,6 @@
 import express from 'express';
 import { registerUser, loginUser, logoutUser, forgotPassword, userProfile } from '../controllers/user.controller.js';
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { verifyJWT } from "../middleware/auth.middleware.js";
 import {Router} from "express";
 
 //To validate the data we use express-validator package
@@ -22,4 +22,4 @@ router.route('/change-password').post(forgotPassword);
 
 router.route('/profile').get(verifyJWT, userProfile);  //Protected route
     
-module.exports = router;
+export default router;

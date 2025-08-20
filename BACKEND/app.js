@@ -1,10 +1,11 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
 
-const express=require('express');
+import express from 'express';
 const app=express();
-const cors = require('cors');
-const connectDB = require('./db/db');
+
+import cors from 'cors';
+import connectDB from './db/db.js';
 
 connectDB();
 
@@ -19,4 +20,4 @@ import postRouter from './routes/post.route.js';
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 
-export { app };
+export default app;
