@@ -1,387 +1,399 @@
 import React, { useState, useEffect } from 'react';
+import { Search, Filter, ChevronDown, Calendar, Building, User, Star, ArrowUpDown, LogIn, UserPlus, BookOpen, Users, Target } from 'lucide-react';
 
-const CampusConnectHomepage = () => {
+// Graduation Cap Logo Component
+const GraduationCapLogo = ({ size = 40 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" className="text-white">
+    <path fill="currentColor" d="M12,3L1,9L12,15L21,12.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>
+  </svg>
+);
+
+// Animated Background Component
+const AnimatedBackground = () => (
+  <div className="absolute inset-0 overflow-hidden">
+    {/* Gradient Mesh */}
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/50"></div>
+    
+    {/* Floating geometric shapes */}
+    <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400/20 rounded-full animate-ping"></div>
+    <div className="absolute top-40 right-32 w-1 h-1 bg-indigo-400/30 rounded-full animate-pulse delay-1000"></div>
+    <div className="absolute bottom-40 left-1/4 w-1.5 h-1.5 bg-purple-400/20 rounded-full animate-ping delay-500"></div>
+    <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-500/25 rounded-full animate-pulse delay-700"></div>
+    
+    {/* Subtle gradient orbs */}
+    <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-blue-100/10 to-indigo-100/10 rounded-full blur-3xl animate-pulse duration-4000"></div>
+    <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-gradient-to-r from-indigo-50/15 to-purple-50/10 rounded-full blur-3xl animate-pulse delay-2000 duration-6000"></div>
+  </div>
+);
+
+// Header Component
+const Header = () => {
+  return (
+    <header className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+      <AnimatedBackground />
+      
+      {/* Glassmorphism overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/10"></div>
+      
+      {/* Navigation */}
+      <nav className="relative z-20 flex justify-between items-center px-8 py-6 backdrop-blur-sm">
+        <div className="flex items-center space-x-4">
+          <div className="p-2 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+            <GraduationCapLogo size={32} />
+          </div>
+          <span className="text-2xl font-light tracking-wide">CampusConnect</span>
+        </div>
+        
+        <div className="flex items-center space-x-4">
+          <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
+            Features
+          </button>
+          <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
+            About
+          </button>
+          <button className="px-6 py-2.5 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/15 transition-all duration-300 border border-white/20 text-sm font-medium">
+            Sign In
+          </button>
+          <button className="px-6 py-2.5 bg-white text-gray-900 rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl text-sm font-medium">
+            Get Started
+          </button>
+        </div>
+      </nav>
+      
+      {/* Hero Section */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] px-8 text-center">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <h1 className="text-7xl md:text-8xl font-extralight tracking-tight leading-none">
+            <span className="block bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent">
+              Connect
+            </span>
+            <span className="block text-white/90 text-6xl md:text-7xl mt-2">
+              Share Success
+            </span>
+          </h1>
+          
+          <p className="text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
+            Bridge the gap between experience and opportunity. Get authentic placement insights 
+            from seniors who've walked the path before you.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+            <button className="px-8 py-4 bg-white text-gray-900 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              Explore Stories
+            </button>
+            <button className="px-8 py-4 border border-white/30 text-white rounded-xl font-medium hover:bg-white/5 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
+              Learn More
+            </button>
+          </div>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+// Search and Filter Bar Component
+const SearchFilterBar = ({ searchTerm, setSearchTerm, filters, setFilters, sortBy, setSortBy, companies, difficulties }) => {
+  return (
+    <div className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-8 mb-8 -mt-16 relative z-10 mx-4">
+      <div className="flex flex-col lg:flex-row gap-6 items-center">
+        {/* Search Bar */}
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <input
+            type="text"
+            placeholder="Search experiences..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-12 pr-4 py-4 border-0 rounded-xl focus:ring-2 focus:ring-blue-500 text-gray-700 bg-white/80 backdrop-blur-sm placeholder-gray-500 shadow-sm"
+          />
+        </div>
+        
+        {/* Filters */}
+        <div className="flex gap-4">
+          <div className="relative">
+            <select 
+              value={filters.company} 
+              onChange={(e) => setFilters({...filters, company: e.target.value})}
+              className="appearance-none bg-white/80 backdrop-blur-sm border-0 rounded-xl px-4 py-4 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 min-w-[160px] shadow-sm"
+            >
+              <option value="">All Companies</option>
+              {companies.map(company => (
+                <option key={company} value={company}>{company}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+          </div>
+          
+          <div className="relative">
+            <select 
+              value={filters.difficulty} 
+              onChange={(e) => setFilters({...filters, difficulty: e.target.value})}
+              className="appearance-none bg-white/80 backdrop-blur-sm border-0 rounded-xl px-4 py-4 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 min-w-[140px] shadow-sm"
+            >
+              <option value="">All Levels</option>
+              {difficulties.map(difficulty => (
+                <option key={difficulty} value={difficulty}>{difficulty}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+          </div>
+          
+          <div className="relative">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="appearance-none bg-white/80 backdrop-blur-sm border-0 rounded-xl px-4 py-4 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 min-w-[140px] shadow-sm"
+            >
+              <option value="newest">Latest</option>
+              <option value="oldest">Oldest</option>
+              <option value="company">Company</option>
+              <option value="difficulty">Difficulty</option>
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Post Card Component
+const PostCard = ({ post }) => {
+  const getDifficultyColor = (difficulty) => {
+    switch(difficulty) {
+      case 'Easy': return 'text-emerald-700 bg-emerald-50 border-emerald-200';
+      case 'Medium': return 'text-amber-700 bg-amber-50 border-amber-200';
+      case 'Hard': return 'text-red-700 bg-red-50 border-red-200';
+      default: return 'text-gray-700 bg-gray-50 border-gray-200';
+    }
+  };
+
+  return (
+    <div className="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 p-6 border border-white/20 hover:border-blue-200/50 hover:-translate-y-1">
+      <div className="flex justify-between items-start mb-6">
+        <div className="flex items-center space-x-4">
+          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-white font-semibold shadow-lg">
+            {post.owner?.name?.charAt(0) || 'U'}
+          </div>
+          <div>
+            <h3 className="font-semibold text-gray-800">{post.owner?.name || 'Anonymous'}</h3>
+            <p className="text-sm text-gray-500">@{post.owner?.userName || 'user'}</p>
+          </div>
+        </div>
+        <span className={`px-3 py-1.5 rounded-full text-xs font-medium border ${getDifficultyColor(post.difficultyLevel)}`}>
+          {post.difficultyLevel}
+        </span>
+      </div>
+      
+      <div className="mb-6">
+        <div className="flex items-center space-x-2 mb-3">
+          <Building className="text-blue-600" size={18} />
+          <h2 className="text-xl font-bold text-gray-800">{post.companyName}</h2>
+        </div>
+        <p className="text-gray-600 font-medium">{post.jobTitle}</p>
+      </div>
+      
+      <div className="mb-6">
+        <div className="flex items-center space-x-2 mb-3">
+          <BookOpen className="text-blue-600" size={16} />
+          <span className="text-sm font-medium text-gray-700">Key Topics</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {post.topicsCovered?.slice(0, 3).map((topic, index) => (
+            <span key={index} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-medium border border-blue-100">
+              {topic}
+            </span>
+          ))}
+          {post.topicsCovered?.length > 3 && (
+            <span className="px-3 py-1 bg-gray-50 text-gray-600 rounded-lg text-xs font-medium border border-gray-100">
+              +{post.topicsCovered.length - 3} more
+            </span>
+          )}
+        </div>
+      </div>
+      
+      <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <Calendar size={14} />
+            <span>{new Date(post.date).toLocaleDateString()}</span>
+          </div>
+          <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-md text-xs font-medium">
+            {post.interviewType}
+          </span>
+        </div>
+      </div>
+      
+      <div className="border-t border-gray-100 pt-4">
+        <p className="text-gray-600 text-sm leading-relaxed mb-4">
+          {post.tips.length > 120 ? `${post.tips.substring(0, 120)}...` : post.tips}
+        </p>
+        <button className="text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:translate-x-1 transition-transform duration-300">
+          Read full experience →
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Main Homepage Component
+const Homepage = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('Recent');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('');
-  const [selectedCompany, setSelectedCompany] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [sortBy, setSortBy] = useState('newest');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [companies, setCompanies] = useState([]);
+  const [filters, setFilters] = useState({
+    company: '',
+    difficulty: '',
+    branch: '',
+    interviewType: ''
+  });
 
+  const difficulties = ['Easy', 'Medium', 'Hard'];
+
+  // Fetch posts from API
   useEffect(() => {
-    checkAuthStatus();
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:5000/api/v1/posts/allposts');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          setPosts(data.data);
+          setFilteredPosts(data.data);
+          
+          // Extract unique companies for filter
+          const uniqueCompanies = [...new Set(data.data.map(post => post.companyName))];
+          setCompanies(uniqueCompanies);
+        }
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching posts:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPosts();
   }, []);
 
-  const checkAuthStatus = () => {
-    const token = localStorage.getItem('accessToken');
-    const userData = localStorage.getItem('user');
-    
-    if (token && userData) {
-      setIsAuthenticated(true);
-      setUser(JSON.parse(userData));
-    }
-  };
+  // Filter and Search Logic
+  useEffect(() => {
+    let filtered = posts.filter(post => {
+      const matchesSearch = post.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           post.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           post.topicsCovered.some(topic => topic.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      const matchesCompany = !filters.company || post.companyName === filters.company;
+      const matchesDifficulty = !filters.difficulty || post.difficultyLevel === filters.difficulty;
+      const matchesInterviewType = !filters.interviewType || post.interviewType === filters.interviewType;
+      
+      return matchesSearch && matchesCompany && matchesDifficulty && matchesInterviewType;
+    });
 
-  const fetchPosts = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      
-      const response = await fetch('http://localhost:5000/api/v1/posts/allposts');
-      
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+    // Sort posts
+    filtered.sort((a, b) => {
+      switch(sortBy) {
+        case 'newest': return new Date(b.date) - new Date(a.date);
+        case 'oldest': return new Date(a.date) - new Date(b.date);
+        case 'company': return a.companyName.localeCompare(b.companyName);
+        case 'difficulty': 
+          const difficultyOrder = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
+          return difficultyOrder[a.difficultyLevel] - difficultyOrder[b.difficultyLevel];
+        default: return 0;
       }
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setPosts(data.data);
-      } else {
-        setError(data.message || 'Failed to fetch experiences');
-      }
-    } catch (err) {
-      console.error('Fetch error:', err);
-      setError('Unable to connect to server. Please ensure your backend is running on port 8000.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    });
 
-  const filteredPosts = posts.filter(post => {
-    const matchesSearch = post.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.jobTitle.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDifficulty = selectedDifficulty === '' || post.difficultyLevel === selectedDifficulty;
-    const matchesCompany = selectedCompany === '' || post.companyName === selectedCompany;
-    return matchesSearch && matchesDifficulty && matchesCompany;
-  });
-
-  const companies = [...new Set(posts.map(post => post.companyName))];
-
-  const getDifficultyStyles = (difficulty) => {
-    switch(difficulty) {
-      case 'Easy': return { bg: 'bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-300', text: 'text-emerald-800', dot: 'bg-emerald-500', shadow: 'shadow-emerald-100' };
-      case 'Medium': return { bg: 'bg-gradient-to-r from-orange-50 to-amber-50 border-orange-300', text: 'text-orange-800', dot: 'bg-orange-500', shadow: 'shadow-orange-100' };
-      case 'Hard': return { bg: 'bg-gradient-to-r from-red-50 to-rose-50 border-red-300', text: 'text-red-800', dot: 'bg-red-500', shadow: 'shadow-red-100' };
-      default: return { bg: 'bg-gradient-to-r from-gray-50 to-slate-50 border-gray-300', text: 'text-gray-800', dot: 'bg-gray-500', shadow: 'shadow-gray-100' };
-    }
-  };
-
-  const getCompanyInitials = (company) => {
-    return company.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
-  };
+    setFilteredPosts(filtered);
+  }, [posts, searchTerm, filters, sortBy]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto"></div>
-          <p className="mt-6 text-slate-700 font-semibold text-lg">Loading experiences...</p>
-          <p className="mt-2 text-slate-500">Gathering insights from your seniors</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+        <Header />
+        <div className="flex justify-center items-center py-20">
+          <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+        <Header />
+        <div className="max-w-4xl mx-auto px-6 py-12">
+          <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-xl">
+            <h3 className="font-semibold mb-2">Unable to load experiences</h3>
+            <p>{error}</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-200">
-                <span className="text-white font-bold text-xl">🎓</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
-                  CampusConnect
-                </h1>
-                <p className="text-xs text-indigo-500 -mt-1 font-medium">Interview Experiences</p>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200 relative group">
-                Experiences
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-200 group-hover:w-full"></span>
-              </a>
-              <a href="#" className="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200 relative group">
-                Companies
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-200 group-hover:w-full"></span>
-              </a>
-              <a href="#" className="text-slate-700 hover:text-indigo-600 font-medium transition-colors duration-200 relative group">
-                Tips
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-200 group-hover:w-full"></span>
-              </a>
-            </nav>
-
-            {/* Auth Buttons */}
-            <div className="flex items-center space-x-3">
-              {isAuthenticated ? (
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-3 bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-2 rounded-xl border border-indigo-200">
-                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-md">
-                      <span className="text-white text-sm font-bold">
-                        {user?.userName?.charAt(0).toUpperCase() || user?.name?.charAt(0).toUpperCase() || 'U'}
-                      </span>
-                    </div>
-                    <span className="text-slate-800 font-semibold">
-                      {user?.userName || user?.name || 'User'}
-                    </span>
-                  </div>
-                  <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-semibold text-sm">
-                    Share Experience
-                  </button>
-                  <button 
-                    onClick={() => {
-                      localStorage.removeItem('accessToken');
-                      localStorage.removeItem('user');
-                      setIsAuthenticated(false);
-                      setUser(null);
-                    }}
-                    className="px-4 py-3 text-slate-600 hover:text-slate-800 font-medium transition-colors duration-200"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <button className="px-5 py-3 text-slate-700 hover:text-indigo-600 font-semibold transition-colors duration-200">
-                    Sign In
-                  </button>
-                  <button className="px-6 py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-semibold">
-                    Sign Up
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-full text-indigo-700 font-semibold text-sm mb-6 border border-indigo-200">
-            <span className="mr-2">✨</span>
-            Trusted by 10,000+ students
-          </div>
-          <h2 className="text-5xl font-bold text-slate-900 mb-6 leading-tight">
-            Real Interview Experiences from
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 mt-2">
-              Your Seniors
-            </span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+      <Header />
+      
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 pb-12">
+        {/* Search and Filter Bar */}
+        <SearchFilterBar 
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          filters={filters}
+          setFilters={setFilters}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          companies={companies}
+          difficulties={difficulties}
+        />
+        
+        {/* Posts Section */}
+        <div className="mb-8 px-4">
+          <h2 className="text-3xl font-light text-gray-800 mb-2">
+            Placement Stories
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Get insider insights, preparation tips, and real questions from students who've successfully navigated their interviews
+          <p className="text-gray-600">
+            {filteredPosts.length} experience{filteredPosts.length !== 1 ? 's' : ''} shared by your seniors
           </p>
         </div>
-
-        {/* Search Section */}
-        <div className="max-w-5xl mx-auto mb-16">
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-10 border border-white/50">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-              {/* Search Input */}
-              <div className="md:col-span-6">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="h-6 w-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    className="w-full pl-12 pr-4 py-4 border-2 border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-slate-800 placeholder-slate-500 bg-white/70"
-                    placeholder="Search companies or roles..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Company Filter */}
-              <div className="md:col-span-3">
-                <select 
-                  className="w-full px-4 py-4 border-2 border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-slate-800 bg-white/70"
-                  value={selectedCompany}
-                  onChange={(e) => setSelectedCompany(e.target.value)}
-                >
-                  <option value="">All Companies</option>
-                  {companies.map(company => (
-                    <option key={company} value={company}>{company}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Difficulty Filter */}
-              <div className="md:col-span-3">
-                <select 
-                  className="w-full px-4 py-4 border-2 border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-slate-800 bg-white/70"
-                  value={selectedDifficulty}
-                  onChange={(e) => setSelectedDifficulty(e.target.value)}
-                >
-                  <option value="">All Levels</option>
-                  <option value="Easy">Easy</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Hard">Hard</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-indigo-100">
-              <div className="text-center group">
-                <div className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-200">{posts.length}</div>
-                <div className="text-sm text-slate-600 font-medium mt-1">Total Experiences</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-200">{companies.length}</div>
-                <div className="text-sm text-slate-600 font-medium mt-1">Companies Covered</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-200">
-                  {posts.filter(p => p.results === 'Selected').length}
-                </div>
-                <div className="text-sm text-slate-600 font-medium mt-1">Success Stories</div>
-              </div>
-            </div>
-          </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 px-4">
+          {filteredPosts.map(post => (
+            <PostCard key={post._id} post={post} />
+          ))}
         </div>
-
-        {/* Results Header */}
-        <div className="flex items-center justify-between mb-10">
-          <div>
-            <h3 className="text-3xl font-bold text-slate-900">
-              Interview Experiences ({filteredPosts.length})
-            </h3>
-            <p className="text-slate-600 mt-2 text-lg">Learn from real student experiences and insights</p>
-          </div>
-          <select 
-            className="px-6 py-3 bg-white/80 border-2 border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-800 font-medium shadow-lg backdrop-blur-sm"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option>Recent</option>
-            <option>Oldest</option>
-            <option>Company A-Z</option>
-          </select>
-        </div>
-
-        {/* Posts Grid */}
-        {error ? (
-          <div className="bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 rounded-3xl p-10 text-center shadow-xl">
-            <div className="text-6xl mb-6">⚠️</div>
-            <h3 className="text-2xl font-bold text-red-800 mb-3">Connection Error</h3>
-            <p className="text-red-700 mb-6 text-lg">{error}</p>
-            <button 
-              onClick={fetchPosts}
-              className="px-8 py-4 bg-gradient-to-r from-red-600 to-rose-600 text-white rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-semibold"
-            >
-              Retry Connection
-            </button>
-          </div>
-        ) : filteredPosts.length === 0 ? (
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 p-16 text-center">
-            <div className="text-8xl mb-8">🎯</div>
-            <h3 className="text-3xl font-bold text-slate-900 mb-4">No Experiences Found</h3>
-            <p className="text-slate-600 mb-8 text-lg">Be the pioneer! Share your interview experience with juniors.</p>
-            {isAuthenticated ? (
-              <button className="px-10 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-semibold text-lg">
-                Share Your Experience
-              </button>
-            ) : (
-              <button className="px-10 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-semibold text-lg">
-                Sign Up to Share Experience
-              </button>
-            )}
-          </div>
-        ) : (
-          <div className="grid gap-8">
-            {filteredPosts.map((post) => {
-              const difficultyStyle = getDifficultyStyles(post.difficultyLevel);
-              return (
-                <div key={post._id} className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 overflow-hidden group hover:transform hover:-translate-y-2">
-                  <div className="p-10">
-                    <div className="flex items-start justify-between mb-8">
-                      {/* Company Logo & Title */}
-                      <div className="flex items-start space-x-5">
-                        <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 rounded-3xl flex items-center justify-center shadow-xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                          <span className="text-white font-bold text-xl">{getCompanyInitials(post.companyName)}</span>
-                        </div>
-                        <div>
-                          <h3 className="text-3xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors duration-300 cursor-pointer">
-                            {post.companyName}
-                          </h3>
-                          <p className="text-xl text-slate-700 font-semibold mt-1">{post.jobTitle}</p>
-                          <p className="text-sm text-slate-500 mt-2 font-medium">{post.interviewType} • {new Date(post.createdAt).toLocaleDateString()}</p>
-                        </div>
-                      </div>
-
-                      {/* Difficulty Badge */}
-                      <div className={`px-6 py-3 rounded-2xl border-2 ${difficultyStyle.bg} ${difficultyStyle.text} flex items-center space-x-3 ${difficultyStyle.shadow} shadow-lg`}>
-                        <div className={`w-3 h-3 rounded-full ${difficultyStyle.dot}`}></div>
-                        <span className="font-bold text-sm">{post.difficultyLevel}</span>
-                      </div>
-                    </div>
-
-                    {/* Topics */}
-                    <div className="mb-8">
-                      <h4 className="font-bold text-slate-800 mb-4 text-lg">Topics Covered:</h4>
-                      <div className="flex flex-wrap gap-3">
-                        {(Array.isArray(post.topicsCovered) ? post.topicsCovered : [post.topicsCovered]).map((topic, index) => (
-                          <span key={index} className="px-4 py-2 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-800 rounded-xl text-sm font-semibold border border-indigo-200 hover:shadow-md transition-shadow duration-200">
-                            {topic}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Tips Preview */}
-                    <div className="mb-8">
-                      <h4 className="font-bold text-slate-800 mb-3 text-lg">Key Tips:</h4>
-                      <p className="text-slate-700 line-clamp-2 text-base leading-relaxed">{post.tips}</p>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="flex items-center justify-between pt-6 border-t border-indigo-100">
-                      <div className="flex items-center space-x-6">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-md">
-                            <span className="text-white text-sm font-bold">{post.owner?.userName?.charAt(0).toUpperCase() || 'A'}</span>
-                          </div>
-                          <span className="text-sm text-slate-700 font-semibold">{post.owner?.userName || 'Anonymous'}</span>
-                        </div>
-                        {post.results && (
-                          <span className={`px-4 py-2 rounded-full text-sm font-bold shadow-md ${
-                            post.results === 'Selected' ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 border border-emerald-200' :
-                            post.results === 'Rejected' ? 'bg-gradient-to-r from-red-100 to-rose-100 text-red-800 border border-red-200' :
-                            'bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 border border-yellow-200'
-                          }`}>
-                            {post.results === 'Selected' ? '✅ Selected' : 
-                             post.results === 'Rejected' ? '❌ Not Selected' : '⏳ Waiting'}
-                          </span>
-                        )}
-                      </div>
-                      <button className="px-8 py-3 bg-gradient-to-r from-slate-100 to-slate-200 hover:from-indigo-500 hover:to-purple-500 text-slate-700 hover:text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5">
-                        Read Full Experience →
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+        
+        {filteredPosts.length === 0 && !loading && (
+          <div className="text-center py-16">
+            <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Search className="text-gray-400" size={32} />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No experiences found</h3>
+            <p className="text-gray-500">Try adjusting your search terms or filters</p>
           </div>
         )}
-      </section>
+      </div>
     </div>
   );
 };
 
-export default CampusConnectHomepage;
+export default Homepage;
