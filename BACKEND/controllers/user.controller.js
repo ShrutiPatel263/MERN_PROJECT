@@ -11,7 +11,8 @@ const generateAccessAndRefereshTokens = async (userId) =>{
         const user = await User.findById(userId)
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
-
+        console.log("Refresh token generated:", refreshToken);
+        console.log("Access token generated:", accessToken);
         user.refreshToken = refreshToken
         await user.save({ validateBeforeSave: false })
 
@@ -117,6 +118,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
         throw new ApiError(401,"Invalid email or password");
     }
 
+    const {accessToken,refreshToken}= await generateAccessAndRefereshTokens(user._id)
+
     const loggedInUser=await User.findById(user._id).select("-password -refreshtoken");
 
         const options={
@@ -126,8 +129,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
     return res
     .status(200)
-    .cookie("accessToken",accessToken,options)
-    .cookie("refreshToken",refreshToken,options)
+    //.cookie("accessToken",accessToken,options)
+    //.cookie("refreshToken",refreshToken,options)
     .json(
       new ApiResponse(
         200,{
