@@ -5,6 +5,7 @@ import SignupPage from './pages/signupPage.jsx'
 import {Route,Routes} from 'react-router-dom';
 import LoginPage from './pages/loginPage.jsx';
 import CreatePostPage from './pages/createPostPage.jsx';
+import DashboardPage from './pages/dashboardPage.jsx';
 function App() {
    return (
      
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/createpost" element={<CreatePostPage />} />
       </Routes>
       

@@ -238,9 +238,10 @@ const CreatePostPage = () => {
     try {
       const response = await fetch('http://localhost:5000/api/v1/posts/createpost', {
         method: 'POST',
+        credentials: 'include',
         headers: { 
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assuming token-based auth
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify(formData),
       });

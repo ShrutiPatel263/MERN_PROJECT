@@ -133,10 +133,11 @@ const loginUser = asyncHandler(async (req, res, next) => {
     //.cookie("refreshToken",refreshToken,options)
     .json(
       new ApiResponse(
-        200,{
+        200,
+        "User logged in successfully",
+        {
           user:loggedInUser,accessToken,refreshToken
-        },
-        "User logged in successfully"
+        }
       )
     )
 });
@@ -165,11 +166,7 @@ const logoutUser=asyncHandler(async (req,res) =>{
   .status(200)
   .clearCookie("accessToken",options)
   .clearCookie("refreshToken",options)
-  .json(new ApiResponse(200,{},"User Logged Out"))
-
- })
-
- const refreshAccessToken  = asyncHandler(async (req,res)=>{
+  .json(new ApiResponse(200,"User Logged Out",{}))
    const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken
 
    if(!incomingRefreshToken){
@@ -240,7 +237,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     await user.save({validateBeforeSave :false})
 
     return res.status(200).json(
-        new ApiResponse(200, {}, "Password updated successfully")
+        new ApiResponse(200, "Password updated successfully", {})
     );
 })
 
@@ -252,7 +249,7 @@ const userProfile = asyncHandler(async (req, res) => {
     }
 
     return res.status(200).json(
-        new ApiResponse(200, user, "User profile fetched successfully")
+        new ApiResponse(200, "User profile fetched successfully", user)
     );
 })
 
@@ -260,7 +257,6 @@ export {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken,
     forgotPassword,
     userProfile
 }

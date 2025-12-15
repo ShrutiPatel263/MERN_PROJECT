@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, ChevronDown, Calendar, Building, User, Star, ArrowUpDown, LogIn, UserPlus, BookOpen, Users, Target } from 'lucide-react';
+import { Search, Filter, ChevronDown, Calendar, Building, User, Star, ArrowUpDown, LogIn, UserPlus, BookOpen, Users, Target, LogOut, Settings, Home } from 'lucide-react';
 
 // Graduation Cap Logo Component
 const GraduationCapLogo = ({ size = 40 }) => (
@@ -26,8 +26,84 @@ const AnimatedBackground = () => (
   </div>
 );
 
+// User Dropdown Component
+const UserDropdown = ({ user, isOpen, onClose }) => {
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    window.location.href = '/';
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="absolute right-0 top-full mt-2 w-64 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 py-2 z-50">
+      {/* User Info */}
+      <div className="px-4 py-3 border-b border-white/20">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-semibold shadow-lg">
+            {user?.name?.charAt(0) || user?.userName?.charAt(0) || 'U'}
+          </div>
+          <div>
+            <p className="font-semibold text-gray-800">{user?.name || 'User'}</p>
+            <p className="text-sm text-gray-600">@{user?.userName || 'user'}</p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Menu Items */}
+      <div className="py-2">
+        <button
+          onClick={() => {
+            window.location.href = '/createpost';
+            onClose();
+          }}
+          className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-200"
+        >
+          <BookOpen size={18} className="text-blue-600" />
+          <span>Share Experience</span>
+        </button>
+        
+        <div className="border-t border-white/20 my-2"></div>
+        
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors duration-200"
+        >
+          <LogOut size={18} />
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // Header Component
-const Header = () => {
+const Header = ({ isAuthenticated, user, onLogout }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  console.log('🎯 Header Props:', { isAuthenticated, user: user?.name || 'null' });
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    window.location.href = '/';
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.user-dropdown-container')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
     <header className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
       <AnimatedBackground />
@@ -45,18 +121,46 @@ const Header = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
-            Features
-          </button>
-          <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
-            About
-          </button>
-          <button className="px-6 py-2.5 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/15 transition-all duration-300 border border-white/20 text-sm font-medium">
-            Sign In
-          </button>
-          <button className="px-6 py-2.5 bg-white text-gray-900 rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl text-sm font-medium">
-            Get Started
-          </button>
+          {isAuthenticated ? (
+            <>
+              {/* User Avatar with Dropdown */}
+              <div className="relative user-dropdown-container">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  {user?.name?.charAt(0) || user?.userName?.charAt(0) || 'U'}
+                </button>
+                
+                <UserDropdown 
+                  user={user} 
+                  isOpen={isDropdownOpen} 
+                  onClose={() => setIsDropdownOpen(false)} 
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
+                Features
+              </button>
+              <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
+                About
+              </button>
+              <button 
+                onClick={() => window.location.href = '/login'}
+                className="px-6 py-2.5 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/15 transition-all duration-300 border border-white/20 text-sm font-medium"
+              >
+                Sign In
+              </button>
+              <button 
+                onClick={() => window.location.href = '/register'}
+                className="px-6 py-2.5 bg-white text-gray-900 rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl text-sm font-medium"
+              >
+                Get Started
+              </button>
+            </>
+          )}
         </div>
       </nav>
       
@@ -252,6 +356,8 @@ const Homepage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [companies, setCompanies] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [filters, setFilters] = useState({
     company: '',
     difficulty: '',
@@ -259,7 +365,64 @@ const Homepage = () => {
     interviewType: ''
   });
 
-  const difficulties = ['Easy', 'Medium', 'Hard'];
+  const 
+  difficulties = ['Easy', 'Medium', 'Hard'];
+
+  // Check authentication status and fetch user data
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    const isAuth = !!token;
+    
+    console.log('🔍 Auth Check:', {
+      token: token ? 'EXISTS' : 'NOT FOUND',
+      isAuth,
+      tokenLength: token?.length || 0
+    });
+    
+    setIsAuthenticated(isAuth);
+    
+    if (isAuth) {
+      // Try to decode JWT token to get user data
+      try {
+        // Check if token is a valid JWT format (has 3 parts separated by dots)
+        if (token.includes('.') && token.split('.').length === 3) {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          console.log('✅ JWT decoded:', payload);
+          setUser({
+            name: payload.name || 'User',
+            userName: payload.userName || 'user',
+            branch: payload.branch || 'CSE'
+          });
+        } else {
+          // If it's not a JWT, try to get user data from localStorage or use placeholder
+          const storedUser = localStorage.getItem('userData');
+          if (storedUser) {
+            const userData = JSON.parse(storedUser);
+            console.log('✅ User data from localStorage:', userData);
+            setUser(userData);
+          } else {
+            console.log('⚠️ Using placeholder user data');
+            setUser({
+              name: 'User',
+              userName: 'user',
+              branch: 'CSE'
+            });
+          }
+        }
+      } catch (error) {
+        console.log('❌ Token decode failed:', error);
+        // If token decode fails, use placeholder data
+        setUser({
+          name: 'User',
+          userName: 'user',
+          branch: 'CSE'
+        });
+      }
+    } else {
+      console.log('❌ No token found, user not authenticated');
+      setUser(null);
+    }
+  }, []);
 
   // Fetch posts from API
   useEffect(() => {
@@ -326,7 +489,7 @@ const Homepage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
-        <Header />
+        <Header isAuthenticated={isAuthenticated} user={user} />
         <div className="flex justify-center items-center py-20">
           <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -337,7 +500,7 @@ const Homepage = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
-        <Header />
+        <Header isAuthenticated={isAuthenticated} user={user} />
         <div className="max-w-4xl mx-auto px-6 py-12">
           <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-xl">
             <h3 className="font-semibold mb-2">Unable to load experiences</h3>
@@ -350,7 +513,7 @@ const Homepage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
-      <Header />
+      <Header isAuthenticated={isAuthenticated} user={user} />
       
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 pb-12">

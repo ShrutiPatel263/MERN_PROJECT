@@ -152,27 +152,50 @@ const LoginPage = () => {
       });
 
       const data = await response.json();
+      
+      console.log('🔍 Login Response:', {
+        ok: response.ok,
+        success: data.success,
+        hasToken: !!data.data?.accessToken,
+        hasUser: !!data.data?.user,
+        data: data
+      });
 
       if (response.ok && data.success) {
-        setUser(data.user || { name: 'User' });
+        const userData = data.data?.user || { name: 'User' };
+        const token = data.data?.accessToken;
+        
+        setUser(userData);
         setSuccess(true);
         
         // Store token if provided
-        if (data.token) {
-          localStorage.setItem('authToken', data.token);
+        if (token) {
+          localStorage.setItem('authToken', token);
+          console.log('✅ Token stored:', token.substring(0, 20) + '...');
+        } else {
+          console.log('⚠️ No token in response');
+        }
+        
+        // Store user data if provided
+        if (userData) {
+          localStorage.setItem('userData', JSON.stringify(userData));
+          console.log('✅ User data stored:', userData);
+        } else {
+          console.log('⚠️ No user data in response');
         }
         
         // Redirect after success screen
         setTimeout(() => {
-          window.location.href = '/dashboard'; // Update with your routing
-          console.log('Login successful, redirect to dashboard');
+          window.location.href = '/'; // Redirect to homepage
+          console.log('Login successful, redirect to homepage');
         }, 2000);
       } else {
+        console.log('❌ Login failed:', data);
         setErrors({ submit: data.message || 'Invalid email or password. Please try again.' });
       }
     } catch (error) {
+      console.error('❌ Login error:', error);
       setErrors({ submit: 'Network error. Please check your connection and try again.' });
-      console.error('Login error:', error);
     } finally {
       setLoading(false);
     }
