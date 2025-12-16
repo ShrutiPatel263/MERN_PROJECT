@@ -18,7 +18,9 @@ router.route('/login').post(loginUser);
 
 router.route('/logout').post( verifyJWT,logoutUser);  //Protected route
 
-router.route('/change-password').post(forgotPassword);
+// router.route('/change-password').post(forgotPassword);
+
+router.route('/forgot-password').post(forgotPassword);
 
 router.route('/profile').get(verifyJWT, userProfile);  //Protected route
     

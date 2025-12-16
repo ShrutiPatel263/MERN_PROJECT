@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Building, Briefcase, BookOpen, Calendar, Target, FileText, Link, Trophy, CheckCircle, AlertCircle, Plus, X, Users } from 'lucide-react';
+import { ArrowLeft, Building, Briefcase, BookOpen, Calendar, Target, FileText, Trophy, CheckCircle, AlertCircle, Plus, X, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Graduation Cap Logo Component
 const GraduationCapLogo = ({ size = 40 }) => (
@@ -11,72 +12,73 @@ const GraduationCapLogo = ({ size = 40 }) => (
 // Animated Background Component
 const AnimatedBackground = () => (
   <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50"></div>
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"></div>
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-50/5 via-blue-50/5 to-indigo-100/10"></div>
     <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400/20 rounded-full animate-ping"></div>
     <div className="absolute top-40 right-32 w-1 h-1 bg-indigo-400/30 rounded-full animate-pulse delay-1000"></div>
-    <div className="absolute bottom-40 left-1/4 w-1.5 h-1.5 bg-purple-400/20 rounded-full animate-ping delay-500"></div>
+    <div className="absolute bottom-40 left-1/4 w-1.5 h-1.5 bg-white/10 rounded-full animate-ping delay-500"></div>
     <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-500/25 rounded-full animate-pulse delay-700"></div>
-    <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-blue-100/10 to-indigo-100/10 rounded-full blur-3xl animate-pulse duration-4000"></div>
-    <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-gradient-to-r from-indigo-50/15 to-purple-50/10 rounded-full blur-3xl animate-pulse delay-2000 duration-6000"></div>
+    <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl animate-pulse duration-4000"></div>
+    <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-gradient-to-r from-indigo-400/5 to-purple-400/5 rounded-full blur-3xl animate-pulse delay-2000 duration-6000"></div>
   </div>
 );
 
 // Input Field Component
 const InputField = ({ label, icon: Icon, error, className = "", ...props }) => (
   <div className="space-y-2">
-    <label className="block text-gray-700 text-sm font-medium">
+    <label className="block text-white/90 text-sm font-medium">
       {label}
     </label>
     <div className="relative">
-      <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+      <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
       <input
         {...props}
-        className={`w-full pl-12 pr-4 py-4 bg-white/70 backdrop-blur-sm border border-white/30 rounded-xl text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400/50 focus:bg-white/80 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''} ${className}`}
+        className={`w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''} ${className}`}
       />
     </div>
-    {error && <p className="text-red-500 text-sm">{error}</p>}
+    {error && <p className="text-red-300/90 text-sm">{error}</p>}
   </div>
 );
 
 // Select Field Component
 const SelectField = ({ label, icon: Icon, options, error, ...props }) => (
   <div className="space-y-2">
-    <label className="block text-gray-700 text-sm font-medium">
+    <label className="block text-white/90 text-sm font-medium">
       {label}
     </label>
     <div className="relative">
-      <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+      <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
       <select
         {...props}
-        className={`w-full pl-12 pr-4 py-4 bg-white/70 backdrop-blur-sm border border-white/30 rounded-xl text-gray-700 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400/50 focus:bg-white/80 transition-all duration-300 appearance-none ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
+        className={`w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 appearance-none ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
       >
-        <option value="">Select an option</option>
+        <option value="" className="bg-gray-900 text-white">Select an option</option>
         {options.map(option => (
-          <option key={option} value={option} className="bg-white text-gray-700">
+          <option key={option} value={option} className="bg-gray-900 text-white">
             {option}
           </option>
         ))}
       </select>
     </div>
-    {error && <p className="text-red-500 text-sm">{error}</p>}
+    {error && <p className="text-red-300/90 text-sm">{error}</p>}
   </div>
 );
 
 // Textarea Field Component
 const TextareaField = ({ label, icon: Icon, error, rows = 4, ...props }) => (
   <div className="space-y-2">
-    <label className="block text-gray-700 text-sm font-medium">
+    <label className="block text-white/90 text-sm font-medium">
       {label}
     </label>
     <div className="relative">
-      <Icon className="absolute left-4 top-4 text-gray-400" size={18} />
+      <Icon className="absolute left-4 top-4 text-white/50" size={18} />
       <textarea
         {...props}
         rows={rows}
-        className={`w-full pl-12 pr-4 py-4 bg-white/70 backdrop-blur-sm border border-white/30 rounded-xl text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400/50 focus:bg-white/80 transition-all duration-300 resize-none ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
+        className={`w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 resize-none ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
       />
     </div>
-    {error && <p className="text-red-500 text-sm">{error}</p>}
+    {error && <p className="text-red-300/90 text-sm">{error}</p>}
   </div>
 );
 
@@ -104,23 +106,23 @@ const MultiInputField = ({ label, icon: Icon, values, onChange, placeholder, err
 
   return (
     <div className="space-y-2">
-      <label className="block text-gray-700 text-sm font-medium">
+      <label className="block text-white/90 text-sm font-medium">
         {label}
       </label>
       <div className="relative">
-        <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+        <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
         <input
           type="text"
           value={currentValue}
           onChange={(e) => setCurrentValue(e.target.value)}
           onKeyPress={handleKeyPress}
-          className={`w-full pl-12 pr-12 py-4 bg-white/70 backdrop-blur-sm border border-white/30 rounded-xl text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400/50 focus:bg-white/80 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
+          className={`w-full pl-12 pr-12 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
           placeholder={placeholder}
         />
         <button
           type="button"
           onClick={addValue}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors duration-200"
         >
           <Plus size={14} />
         </button>
@@ -131,13 +133,13 @@ const MultiInputField = ({ label, icon: Icon, values, onChange, placeholder, err
           {values.map((value, index) => (
             <span
               key={index}
-              className="inline-flex items-center space-x-2 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium border border-blue-200"
+              className="inline-flex items-center space-x-2 px-3 py-1.5 bg-blue-500/20 text-blue-200 rounded-lg text-sm font-medium border border-blue-400/30"
             >
               <span>{value}</span>
               <button
                 type="button"
                 onClick={() => removeValue(index)}
-                className="text-blue-500 hover:text-blue-700 transition-colors"
+                className="text-blue-300 hover:text-blue-100 transition-colors"
               >
                 <X size={12} />
               </button>
@@ -145,7 +147,7 @@ const MultiInputField = ({ label, icon: Icon, values, onChange, placeholder, err
           ))}
         </div>
       )}
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      {error && <p className="text-red-300/90 text-sm mt-1">{error}</p>}
     </div>
   );
 };
@@ -156,17 +158,17 @@ const SuccessScreen = () => (
     <AnimatedBackground />
     
     <div className="relative z-10 max-w-md w-full">
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl p-8 text-center border border-white/30">
-        <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle className="text-emerald-600" size={40} />
+      <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 text-center border border-white/20">
+        <div className="w-20 h-20 bg-emerald-500/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-400/30">
+          <CheckCircle className="text-emerald-400" size={40} />
         </div>
-        <h2 className="text-2xl font-light text-gray-800 mb-3">Experience Shared!</h2>
-        <p className="text-gray-600 mb-8 leading-relaxed">
+        <h2 className="text-2xl font-light text-white mb-3">Experience Shared!</h2>
+        <p className="text-white/70 mb-8 leading-relaxed">
           Your placement experience has been successfully posted and will help fellow students in their journey.
         </p>
         <button 
           onClick={() => window.location.href = '/'}
-          className="w-full bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="w-full bg-white text-gray-900 py-4 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
         >
           View All Posts
         </button>
@@ -274,17 +276,17 @@ const CreatePostPage = () => {
       <AnimatedBackground />
       
       {/* Header */}
-      <div className="relative z-10 bg-white/10 backdrop-blur-sm border-b border-white/20">
+      <div className="relative z-10 bg-white/5 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <button className="inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors duration-300 group">
+            <Link to="/" className="inline-flex items-center text-white/70 hover:text-white transition-colors duration-300 group">
               <ArrowLeft size={18} className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
               <span className="text-sm font-medium">Back to Home</span>
-            </button>
+            </Link>
             
             <div className="flex items-center space-x-3">
               <GraduationCapLogo size={24} />
-              <span className="text-xl font-light text-gray-800">CampusConnect</span>
+              <span className="text-xl font-light text-white">CampusConnect</span>
             </div>
           </div>
         </div>
@@ -293,11 +295,11 @@ const CreatePostPage = () => {
       {/* Main Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-8">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-light text-gray-800 mb-3">Share Your Experience</h1>
-          <p className="text-gray-600 text-lg">Help fellow students by sharing your placement journey</p>
+          <h1 className="text-4xl font-light text-white mb-3">Share Your Experience</h1>
+          <p className="text-white/70 text-lg">Help fellow students by sharing your placement journey</p>
         </div>
 
-        <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30">
+        <div className="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20">
           <div className="p-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column */}
@@ -408,7 +410,7 @@ const CreatePostPage = () => {
             </div>
 
             {errors.submit && (
-              <div className="flex items-center space-x-3 text-red-600 text-sm bg-red-50 border border-red-200 rounded-xl p-4 mt-6">
+              <div className="flex items-center space-x-3 text-red-300/90 text-sm bg-red-500/10 border border-red-400/20 rounded-xl p-4 mt-6">
                 <AlertCircle size={16} className="flex-shrink-0" />
                 <span>{errors.submit}</span>
               </div>
@@ -418,17 +420,17 @@ const CreatePostPage = () => {
               <button
                 type="button"
                 onClick={() => window.history.back()}
-                className="flex-1 px-6 py-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-all duration-300"
+                className="flex-1 px-6 py-4 border border-white/20 text-white rounded-xl font-medium hover:bg-white/5 transition-all duration-300"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className={`flex-1 bg-blue-600 text-white font-medium py-4 rounded-xl transition-all duration-300 ${
+                className={`flex-1 bg-white text-gray-900 font-medium py-4 rounded-xl transition-all duration-300 ${
                   loading 
                     ? 'opacity-60 cursor-not-allowed' 
-                    : 'hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 shadow-lg'
+                    : 'hover:bg-gray-100 hover:shadow-lg hover:-translate-y-0.5 shadow-lg'
                 }`}
               >
                 {loading ? (

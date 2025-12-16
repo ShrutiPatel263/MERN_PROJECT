@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, User, Mail, Lock, UserCheck, GraduationCap, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Graduation Cap Logo Component
 const GraduationCapLogo = ({ size = 40 }) => (
@@ -88,12 +89,9 @@ const SuccessScreen = () => (
         <p className="text-white/70 mb-8 leading-relaxed">
           Your account has been created successfully. You can now explore placement experiences and connect with your seniors.
         </p>
-        <button 
-          onClick={() => window.location.href = '/login'}
-          className="w-full bg-white text-gray-900 py-4 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
-        >
+        <Link to="/login" className="w-full inline-block text-center bg-white text-gray-900 py-4 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
           Continue to Sign In
-        </button>
+        </Link>
       </div>
     </div>
   </div>
@@ -208,10 +206,10 @@ const SignUpPage = () => {
       <div className="w-full max-w-md relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <button className="inline-flex items-center text-white/70 hover:text-white mb-6 transition-colors duration-300 group">
+          <Link to="/" className="inline-flex items-center text-white/70 hover:text-white mb-6 transition-colors duration-300 group">
             <ArrowLeft size={18} className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
             <span className="text-sm font-medium">Back to Home</span>
-          </button>
+          </Link>
           
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-3 p-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20">
@@ -333,9 +331,9 @@ const SignUpPage = () => {
             <div className="text-center">
               <p className="text-white/60">
                 Already have an account?{' '}
-                <button className="text-white hover:text-white/80 font-medium transition-colors duration-300 underline underline-offset-2">
+                <Link to="/login" className="text-white hover:text-white/80 font-medium transition-colors duration-300 underline underline-offset-2">
                   Sign In
-                </button>
+                </Link>
               </p>
             </div>
           </div>

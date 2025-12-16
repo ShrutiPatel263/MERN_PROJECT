@@ -141,10 +141,16 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
             </>
           ) : (
             <>
-              <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
+              <button
+                onClick={() => document.getElementById('posts')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300"
+              >
                 Features
               </button>
-              <button className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300">
+              <button
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300"
+              >
                 About
               </button>
               <button 
@@ -182,10 +188,16 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
-            <button className="px-8 py-4 bg-white text-gray-900 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <button
+              onClick={() => document.getElementById('posts')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-white text-gray-900 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
               Explore Stories
             </button>
-            <button className="px-8 py-4 border border-white/30 text-white rounded-xl font-medium hover:bg-white/5 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
+            <button
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 border border-white/30 text-white rounded-xl font-medium hover:bg-white/5 hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
+            >
               Learn More
             </button>
           </div>
@@ -530,7 +542,7 @@ const Homepage = () => {
         />
         
         {/* Posts Section */}
-        <div className="mb-8 px-4">
+        <div id="posts" className="mb-8 px-4">
           <h2 className="text-3xl font-light text-gray-800 mb-2">
             Placement Stories
           </h2>
@@ -543,6 +555,14 @@ const Homepage = () => {
           {filteredPosts.map(post => (
             <PostCard key={post._id} post={post} />
           ))}
+        </div>
+
+        {/* About Section (target for Learn More / About nav) */}
+        <div id="about" className="mt-16 px-4 max-w-4xl mx-auto">
+          <div className="bg-white/80 backdrop-blur rounded-2xl p-8 border border-gray-100 shadow-md">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-2">About CampusConnect</h3>
+            <p className="text-gray-600">CampusConnect is a community-driven platform where seniors share placement experiences, interview tips, and real-world insights to help the next generation succeed. Browse placement stories, filter by company or difficulty, and learn from peers who've been there.</p>
+          </div>
         </div>
         
         {filteredPosts.length === 0 && !loading && (
