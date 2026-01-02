@@ -261,7 +261,7 @@ const DashboardPage = () => {
               <div className="p-2 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
                 <GraduationCapLogo size={32} />
               </div>
-              <span className="text-2xl font-light tracking-wide text-gray-800">CampusConnect</span>
+              <span className="text-2xl font-light tracking-wide text-gray-800">CampusBridge</span>
             </div>
             
             <div className="flex items-center space-x-4">

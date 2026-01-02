@@ -85,7 +85,7 @@ const SuccessScreen = () => (
         <div className="w-20 h-20 bg-emerald-500/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-400/30">
           <CheckCircle className="text-emerald-400" size={40} />
         </div>
-        <h2 className="text-2xl font-light text-white mb-3">Welcome to CampusConnect!</h2>
+        <h2 className="text-2xl font-light text-white mb-3">Welcome to CampusBridge!</h2>
         <p className="text-white/70 mb-8 leading-relaxed">
           Your account has been created successfully. You can now explore placement experiences and connect with your seniors.
         </p>
@@ -214,7 +214,7 @@ const SignUpPage = () => {
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-3 p-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20">
               <GraduationCapLogo size={32} />
-              <span className="text-2xl font-light text-white tracking-wide">CampusConnect</span>
+              <span className="text-2xl font-light text-white tracking-wide">CampusBridge</span>
             </div>
           </div>
           

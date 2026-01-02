@@ -228,7 +228,7 @@ const LoginPage = () => {
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-3 p-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20">
               <GraduationCapLogo size={32} />
-              <span className="text-2xl font-light text-white tracking-wide">CampusConnect</span>
+              <span className="text-2xl font-light text-white tracking-wide">CampusBridge</span>
             </div>
           </div>
           
@@ -311,7 +311,7 @@ const LoginPage = () => {
 
         <div className="text-center mt-8">
           <p className="text-white/50 text-sm leading-relaxed max-w-sm mx-auto">
-            Access your personalized dashboard and connect with the CampusConnect community
+            Access your personalized dashboard and connect with the CampusBridge community
           </p>
         </div>
       </div>

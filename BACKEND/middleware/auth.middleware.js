@@ -103,7 +103,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     if (!token || typeof token !== "string") {
       throw new ApiError(401, "Unauthorized request - no token provided");
     }
-
+    
     token = token.trim();
     if (token.startsWith("Bearer ")) token = token.slice(7).trim();
 

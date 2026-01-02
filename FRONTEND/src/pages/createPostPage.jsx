@@ -286,7 +286,7 @@ const CreatePostPage = () => {
             
             <div className="flex items-center space-x-3">
               <GraduationCapLogo size={24} />
-              <span className="text-xl font-light text-white">CampusConnect</span>
+              <span className="text-xl font-light text-white">CampusBridge</span>
             </div>
           </div>
         </div>

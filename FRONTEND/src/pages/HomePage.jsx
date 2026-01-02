@@ -125,7 +125,7 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
           <div className="p-2 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
             <GraduationCapLogo size={32} />
           </div>
-          <span className="text-2xl font-light tracking-wide">CampusConnect</span>
+          <span className="text-2xl font-light tracking-wide">CampusBridge</span>
         </div>
         
         <div className="flex items-center space-x-4">
@@ -568,8 +568,8 @@ const Homepage = () => {
         {/* About Section (target for Learn More / About nav) */}
         <div id="about" className="mt-16 px-4 max-w-4xl mx-auto">
           <div className="bg-white/80 backdrop-blur rounded-2xl p-8 border border-gray-100 shadow-md">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">About CampusConnect</h3>
-            <p className="text-gray-600">CampusConnect is a community-driven platform where seniors share placement experiences, interview tips, and real-world insights to help the next generation succeed. Browse placement stories, filter by company or difficulty, and learn from peers who've been there.</p>
+            <h3 className="text-2xl font-semibold text-gray-800 mb-2">About CampusBridge</h3>
+            <p className="text-gray-600">CampusBridge is a community-driven platform where seniors share placement experiences, interview tips, and real-world insights to help the next generation succeed. Browse placement stories, filter by company or difficulty, and learn from peers who've been there.</p>
           </div>
         </div>
         
