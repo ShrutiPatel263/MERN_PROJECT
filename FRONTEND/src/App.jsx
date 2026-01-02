@@ -7,6 +7,7 @@ import LoginPage from './pages/loginPage.jsx';
 import CreatePostPage from './pages/createPostPage.jsx';
 import DashboardPage from './pages/dashboardPage.jsx';
 import ForgotPasswordPage from './pages/forgotPasswordPage.jsx';
+import PostPage from './pages/postPage.jsx';
 function App() {
    return (
      
@@ -17,6 +18,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/createpost" element={<CreatePostPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/post/:postId" element={<PostPage />} />
       </Routes>
       
    )

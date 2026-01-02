@@ -1,101 +1,12 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, User, Mail, Lock, UserCheck, GraduationCap, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
+import { User, Mail, UserCheck, GraduationCap, ArrowLeft, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-// Graduation Cap Logo Component
-const GraduationCapLogo = ({ size = 40 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" className="text-white">
-    <path fill="currentColor" d="M12,3L1,9L12,15L21,12.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>
-  </svg>
-);
-
-// Animated Background Component
-const AnimatedBackground = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    {/* Base gradient */}
-    <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"></div>
-    
-    {/* Subtle gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-br from-slate-50/5 via-blue-50/5 to-indigo-100/10"></div>
-    
-    {/* Floating particles */}
-    <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400/20 rounded-full animate-ping"></div>
-    <div className="absolute top-40 right-32 w-1 h-1 bg-indigo-400/30 rounded-full animate-pulse delay-1000"></div>
-    <div className="absolute bottom-40 left-1/4 w-1.5 h-1.5 bg-white/10 rounded-full animate-ping delay-500"></div>
-    <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-500/25 rounded-full animate-pulse delay-700"></div>
-    
-    {/* Gradient orbs */}
-    <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 rounded-full blur-3xl animate-pulse duration-4000"></div>
-    <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-gradient-to-r from-indigo-400/5 to-purple-400/5 rounded-full blur-3xl animate-pulse delay-2000 duration-6000"></div>
-  </div>
-);
-
-// Input Field Component
-const InputField = ({ label, icon: Icon, error, className = "", ...props }) => (
-  <div className="space-y-2">
-    <label className="block text-white/90 text-sm font-medium">
-      {label}
-    </label>
-    <div className="relative">
-      <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
-      <input
-        {...props}
-        className={`w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''} ${className}`}
-      />
-    </div>
-    {error && <p className="text-red-300/90 text-sm">{error}</p>}
-  </div>
-);
-
-// Password Field Component
-const PasswordField = ({ label, name, value, onChange, showPassword, togglePassword, error, placeholder }) => (
-  <div className="space-y-2">
-    <label className="block text-white/90 text-sm font-medium">
-      {label}
-    </label>
-    <div className="relative">
-      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
-      <input
-        type={showPassword ? "text" : "password"}
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={`w-full pl-12 pr-12 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
-        placeholder={placeholder}
-      />
-      <button
-        type="button"
-        onClick={togglePassword}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white/80 transition-colors duration-200"
-      >
-        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-      </button>
-    </div>
-    {error && <p className="text-red-300/90 text-sm">{error}</p>}
-  </div>
-);
-
-// Success Screen Component
-const SuccessScreen = () => (
-  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center px-6 relative overflow-hidden">
-    <AnimatedBackground />
-    
-    <div className="relative z-10 max-w-md w-full">
-      <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 text-center border border-white/20">
-        <div className="w-20 h-20 bg-emerald-500/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-400/30">
-          <CheckCircle className="text-emerald-400" size={40} />
-        </div>
-        <h2 className="text-2xl font-light text-white mb-3">Welcome to CampusBridge!</h2>
-        <p className="text-white/70 mb-8 leading-relaxed">
-          Your account has been created successfully. You can now explore placement experiences and connect with your seniors.
-        </p>
-        <Link to="/login" className="w-full inline-block text-center bg-white text-gray-900 py-4 rounded-xl font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
-          Continue to Sign In
-        </Link>
-      </div>
-    </div>
-  </div>
-);
+import GraduationCapLogo from '../components/Common/GraduationCapLogo';
+import AnimatedBackground from '../components/Common/AnimatedBackground';
+import InputField from '../components/Auth/InputField';
+import PasswordField from '../components/Auth/PasswordField';
+import SelectField from '../components/Auth/SelectField';
+import SuccessScreen from '../components/Auth/SuccessScreen';
 
 // Main Sign Up Component
 const SignUpPage = () => {
@@ -196,7 +107,14 @@ const SignUpPage = () => {
   };
 
   if (success) {
-    return <SuccessScreen />;
+    return (
+      <SuccessScreen 
+        title="Welcome to CampusBridge!"
+        message="Your account has been created successfully. You can now explore placement experiences and connect with your seniors."
+        linkTo="/login"
+        linkText="Continue to Sign In"
+      />
+    );
   }
 
   return (
@@ -259,26 +177,15 @@ const SignUpPage = () => {
             />
 
             {/* Branch Field */}
-            <div className="space-y-2">
-              <label className="block text-white/90 text-sm font-medium">
-                Branch
-              </label>
-              <div className="relative">
-                <GraduationCap className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
-                <select
-                  name="branch"
-                  value={formData.branch}
-                  onChange={handleChange}
-                  className={`w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 appearance-none ${errors.branch ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
-                >
-                  <option value="" className="bg-gray-900 text-white">Select your branch</option>
-                  {branches.map(branch => (
-                    <option key={branch} value={branch} className="bg-gray-900 text-white">{branch}</option>
-                  ))}
-                </select>
-              </div>
-              {errors.branch && <p className="text-red-300/90 text-sm">{errors.branch}</p>}
-            </div>
+            <SelectField
+              label="Branch"
+              icon={GraduationCap}
+              name="branch"
+              value={formData.branch}
+              onChange={handleChange}
+              options={branches}
+              error={errors.branch}
+            />
 
             <PasswordField
               label="Password"

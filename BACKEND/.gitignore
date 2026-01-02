@@ -142,3 +142,14 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+# Documentation files (local refactoring guides)
+COMPONENT_REFACTORING_SUMMARY.md
+ARCHITECTURE_DIAGRAM.md
+DEVELOPER_GUIDE.md
+QUICK_REFERENCE.md
+REFACTORING_CHECKLIST.md
+README_REFACTORING.md
+VISUAL_GUIDE.md
+
+
