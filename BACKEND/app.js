@@ -7,7 +7,10 @@ const app=express();
 import cors from 'cors';
 import connectDB from './db/db.js';
 
-connectDB();
+connectDB().catch(err => {
+  console.error('MongoDB connection failed:', err.message);
+  // App continues to run even if DB connection fails
+});
 
 // CORS configuration to allow credentials and requests from frontend
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
