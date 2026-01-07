@@ -5,6 +5,7 @@ import AnimatedBackground from '../components/Common/AnimatedBackground';
 import UserProfileCard from '../components/Dashboard/UserProfileCard';
 import StatsCard from '../components/Dashboard/StatsCard';
 import PostCard from '../components/Dashboard/PostCard';
+import { API_ENDPOINTS } from '../config/api';
 
 // Main Dashboard Component
 const DashboardPage = () => {
@@ -49,7 +50,7 @@ const DashboardPage = () => {
   const fetchUserPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/v1/posts/allposts');
+      const response = await fetch(API_ENDPOINTS.ALL_POSTS);
       
       if (!response.ok) {
         throw new Error('Failed to fetch posts');
@@ -82,7 +83,7 @@ const DashboardPage = () => {
   const handleDeletePost = async (postId) => {
     if (window.confirm('Are you sure you want to delete this post?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/posts/deletepost/${postId}`, {
+        const response = await fetch(API_ENDPOINTS.DELETE_POST(postId), {
           method: 'DELETE',
           credentials: 'include',
           headers: {

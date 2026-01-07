@@ -8,6 +8,7 @@ import SelectField from '../components/Auth/SelectField';
 import TextareaField from '../components/Auth/TextareaField';
 import MultiInputField from '../components/Auth/MultiInputField';
 import SuccessScreen from '../components/Auth/SuccessScreen';
+import { API_ENDPOINTS } from '../config/api';
 
 // Main Create Post Component
 const CreatePostPage = () => {
@@ -70,7 +71,7 @@ const CreatePostPage = () => {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/v1/posts/createpost', {
+      const response = await fetch(API_ENDPOINTS.CREATE_POST, {
         method: 'POST',
         credentials: 'include',
         headers: { 

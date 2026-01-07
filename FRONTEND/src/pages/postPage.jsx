@@ -4,6 +4,7 @@ import { ArrowLeft, Building, Briefcase, BookOpen, Calendar, Target, Zap, Trophy
 import { Link } from 'react-router-dom';
 import GraduationCapLogo from '../components/Common/GraduationCapLogo';
 import AnimatedBackground from '../components/Common/AnimatedBackground';
+import { API_ENDPOINTS } from '../config/api';
 
 const PostPage = () => {
   const { postId } = useParams();
@@ -18,7 +19,7 @@ const PostPage = () => {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/v1/posts/post/${postId}`, {
+        const response = await fetch(API_ENDPOINTS.GET_POST(postId), {
           method: 'GET',
           credentials: 'include',
           headers: {

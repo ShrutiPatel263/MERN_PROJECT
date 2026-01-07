@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import Header from '../components/Home/Header';
 import SearchFilterBar from '../components/Home/SearchFilterBar';
 import HomePostCard from '../components/Home/HomePostCard';
+import { API_ENDPOINTS } from '../config/api';
 
 // Main Homepage Component
 const Homepage = () => {
@@ -86,7 +87,7 @@ const Homepage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:5000/api/v1/posts/allposts');
+        const response = await fetch(API_ENDPOINTS.ALL_POSTS);
         
         if (!response.ok) {
           throw new Error('Failed to fetch posts');

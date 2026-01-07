@@ -7,6 +7,7 @@ import InputField from '../components/Auth/InputField';
 import PasswordField from '../components/Auth/PasswordField';
 import SelectField from '../components/Auth/SelectField';
 import SuccessScreen from '../components/Auth/SuccessScreen';
+import { API_ENDPOINTS } from '../config/api';
 
 // Main Sign Up Component
 const SignUpPage = () => {
@@ -76,7 +77,7 @@ const SignUpPage = () => {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/v1/users/register', {
+      const response = await fetch(API_ENDPOINTS.REGISTER, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
