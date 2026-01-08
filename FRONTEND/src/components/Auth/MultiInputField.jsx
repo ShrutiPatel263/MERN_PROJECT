@@ -37,12 +37,12 @@ const MultiInputField = ({ label, icon: Icon, values, onChange, placeholder, err
               onChange={(e) => setCurrentValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={placeholder}
-              className={`flex-1 ${Icon ? 'pl-12' : 'pl-4'} pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
+              className={`flex-1 ${Icon ? 'pl-12' : 'pl-4'} pr-4 py-3 sm:py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg sm:rounded-xl text-white placeholder-white/50 focus:ring-2 focus:ring-white/30 focus:border-white/40 focus:bg-white/10 transition-all duration-300 text-sm sm:text-base ${error ? 'border-red-400/60 focus:ring-red-400/30' : ''}`}
             />
             <button
               type="button"
               onClick={addValue}
-              className="px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all duration-300 flex-shrink-0"
+              className="px-4 sm:px-6 py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex-shrink-0 text-sm sm:text-base"
             >
               Add
             </button>

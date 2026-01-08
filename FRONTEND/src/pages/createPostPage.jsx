@@ -117,33 +117,33 @@ const CreatePostPage = () => {
       
       {/* Header */}
       <div className="relative z-10 bg-white/5 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-4xl mx-auto px-6 py-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="inline-flex items-center text-white/70 hover:text-white transition-colors duration-300 group">
-              <ArrowLeft size={18} className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
-              <span className="text-sm font-medium">Back to Home</span>
+              <ArrowLeft size={16} className="sm:size-[18px] mr-1 sm:mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
+              <span className="text-xs sm:text-sm font-medium">Back to Home</span>
             </Link>
             
-            <div className="flex items-center space-x-3">
-              <GraduationCapLogo size={24} />
-              <span className="text-xl font-light text-white">CampusBridge</span>
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <GraduationCapLogo size={20} className="sm:size-6" />
+              <span className="text-base sm:text-xl font-light text-white">CampusBridge</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-light text-white mb-3">Share Your Experience</h1>
-          <p className="text-white/70 text-lg">Help fellow students by sharing your placement journey</p>
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-2 sm:mb-3">Share Your Experience</h1>
+          <p className="text-white/70 text-sm sm:text-base md:text-lg px-2">Help fellow students by sharing your placement journey</p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20">
-          <div className="p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white/5 backdrop-blur-xl rounded-xl sm:rounded-2xl shadow-2xl border border-white/20">
+          <div className="p-4 sm:p-6 md:p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               {/* Left Column */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <InputField
                   label="Company Name"
                   icon={Building}
@@ -197,7 +197,7 @@ const CreatePostPage = () => {
               </div>
 
               {/* Right Column */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <TextareaField
                   label="Round Details"
                   icon={FileText}
@@ -250,24 +250,24 @@ const CreatePostPage = () => {
             </div>
 
             {errors.submit && (
-              <div className="flex items-center space-x-3 text-red-300/90 text-sm bg-red-500/10 border border-red-400/20 rounded-xl p-4 mt-6">
-                <AlertCircle size={16} className="flex-shrink-0" />
+              <div className="flex items-center space-x-2 sm:space-x-3 text-red-300/90 text-xs sm:text-sm bg-red-500/10 border border-red-400/20 rounded-lg sm:rounded-xl p-3 sm:p-4 mt-4 sm:mt-6">
+                <AlertCircle size={14} className="sm:size-4 flex-shrink-0" />
                 <span>{errors.submit}</span>
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
               <button
                 type="button"
                 onClick={() => window.history.back()}
-                className="flex-1 px-6 py-4 border border-white/20 text-white rounded-xl font-medium hover:bg-white/5 transition-all duration-300"
+                className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border border-white/20 text-white rounded-lg sm:rounded-xl font-medium hover:bg-white/5 transition-all duration-300 text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className={`flex-1 bg-white text-gray-900 font-medium py-4 rounded-xl transition-all duration-300 ${
+                className={`flex-1 bg-white text-gray-900 font-medium py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-300 text-sm sm:text-base ${
                   loading 
                     ? 'opacity-60 cursor-not-allowed' 
                     : 'hover:bg-gray-100 hover:shadow-lg hover:-translate-y-0.5 shadow-lg'
