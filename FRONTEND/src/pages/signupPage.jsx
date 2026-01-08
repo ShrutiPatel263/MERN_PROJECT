@@ -26,7 +26,7 @@ const SignUpPage = () => {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
 
-  const branches = ['CSE', 'IT', 'ECE', 'EEE', 'MECH', 'CIVIL'];
+  const branches = ['CSE(Data Science)','CE','IT', 'ECE', 'EEE', 'MECH', 'CIVIL'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -162,7 +162,7 @@ const SignUpPage = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="your.name@vgecg.ac.in"
+              placeholder="enrollment.number@vgecg.ac.in"
               error={errors.email}
             />
 
