@@ -52,7 +52,7 @@ const FooterSignature = () => {
               </a>
               <span className="text-white/40">•</span>
               <a 
-                href="shrutipatel1126@gmail.com" 
+                href="mailto:shrutipatel1126@gmail.com" 
                 className="text-white/70 hover:text-white transition-colors text-sm font-medium hover:underline"
               >
                 Contact
