@@ -8,9 +8,11 @@ import CreatePostPage from './pages/createPostPage.jsx';
 import DashboardPage from './pages/dashboardPage.jsx';
 import ForgotPasswordPage from './pages/forgotPasswordPage.jsx';
 import PostPage from './pages/postPage.jsx';
+import FooterSignature from './components/Common/FooterSignature';
+
 function App() {
    return (
-     
+     <>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<SignupPage />} />
@@ -20,7 +22,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/post/:postId" element={<PostPage />} />
       </Routes>
-      
+      <FooterSignature />
+     </>
    )
 }
 
