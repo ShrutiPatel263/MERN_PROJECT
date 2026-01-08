@@ -172,10 +172,10 @@ const PostPage = () => {
               <p className="text-white/70 text-sm mb-1">Result</p>
               <p className="text-white font-semibold">{post?.results || 'Not mentioned'}</p>
             </div>
-            <div>
+            {/* <div>
               <p className="text-white/70 text-sm mb-1">Engagement</p>
               <p className="text-white font-semibold">{likes} Likes</p>
-            </div>
+            </div> */}
           </div>
         </div>
 

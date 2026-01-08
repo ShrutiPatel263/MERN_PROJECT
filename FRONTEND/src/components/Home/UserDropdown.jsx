@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, BookOpen } from 'lucide-react';
+import { LogOut, BookOpen, BarChart3 } from 'lucide-react';
 
 const UserDropdown = ({ user, isOpen, onClose }) => {
   const handleLogout = () => {
@@ -38,6 +38,18 @@ const UserDropdown = ({ user, isOpen, onClose }) => {
             <BookOpen size={16} className="text-blue-300" />
           </div>
           <span className="font-light tracking-wide">Share Experience</span>
+        </button>
+        <button
+          onClick={() => {
+            window.location.href = '/analysis';
+            onClose();
+          }}
+          className="w-full px-4 py-3 text-left text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 flex items-center space-x-3 group mt-2"
+        >
+          <div className="w-9 h-9 bg-gradient-to-br from-purple-500/20 to-pink-500/20 group-hover:from-purple-500/30 group-hover:to-pink-500/30 rounded-lg flex items-center justify-center transition-all duration-200">
+            <BarChart3 size={16} className="text-purple-300" />
+          </div>
+          <span className="font-light tracking-wide">View Insights</span>
         </button>
       </div>
 

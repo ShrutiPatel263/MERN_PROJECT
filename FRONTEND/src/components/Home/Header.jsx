@@ -52,6 +52,12 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-4">
+          <button
+            onClick={() => window.location.href = '/analysis'}
+            className="px-6 py-2.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300"
+          >
+            Insights
+          </button>
           {isAuthenticated ? (
             <>
               {/* User Avatar with Dropdown */}
@@ -151,6 +157,15 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
         {!isAuthenticated && isMobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 md:hidden bg-slate-900/95 backdrop-blur-md border-t border-white/10 z-30">
             <div className="flex flex-col py-4 px-4 space-y-3">
+              <button
+                onClick={() => {
+                  window.location.href = '/analysis';
+                  setIsMobileMenuOpen(false);
+                }}
+                className="px-4 py-3 text-left text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              >
+                Insights
+              </button>
               <button
                 onClick={() => {
                   document.getElementById('posts')?.scrollIntoView({ behavior: 'smooth' });
