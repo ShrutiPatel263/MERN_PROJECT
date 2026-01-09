@@ -26,7 +26,7 @@ const SignUpPage = () => {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
 
-  const branches = ['CSE(Data Science)','CE','IT', 'ECE', 'EEE', 'MECH', 'CIVIL'];
+  const branches = ['CSE(Data Science)','CE'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
