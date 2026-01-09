@@ -231,7 +231,7 @@ const LoginPage = () => {
 
         <div className="text-center mt-8">
           <p className="text-white/50 text-sm leading-relaxed max-w-sm mx-auto">
-            Access your personalized dashboard and connect with the CampusBridge community
+             connect with the CampusBridge community
           </p>
         </div>
       </div>
