@@ -30,7 +30,9 @@ const userSchema = new mongoose.Schema({
     branch:{
         type: String,
         required:true,
-        enum: ['CSE', 'IT', 'ECE', 'EEE', 'MECH', 'CIVIL'], // Example branches
+        // Must match the exact values sent from the frontend signup page
+        // See FRONTEND/src/pages/signupPage.jsx (branches array)
+        enum: ['CSE(Data Science)', 'CE'],
     },
     refreshToken: {
     type: String
