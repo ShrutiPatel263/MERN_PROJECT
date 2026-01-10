@@ -12,11 +12,14 @@ const createPost= asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required");
     }
 
+    // Normalize company name (trim whitespace to prevent duplicates)
+    const normalizedCompanyName = companyName.trim();
+
     //Create a post 
     const post= await Post.create({
         owner: req.user._id,
-        companyName,
-        jobTitle,
+        companyName: normalizedCompanyName,
+        jobTitle: jobTitle.trim(),
         topicsCovered,
         interviewType,
         roundDetails,
@@ -63,12 +66,15 @@ const editPost = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required");
     }
 
+    // Normalize company name (trim whitespace to prevent duplicates)
+    const normalizedCompanyName = companyName.trim();
+
     //Find the post
     const updatedPost = await Post.findByIdAndUpdate(
         postId,{
             $set:{
-                companyName,
-                jobTitle,
+                companyName: normalizedCompanyName,
+                jobTitle: jobTitle.trim(),
                 topicsCovered,
                 interviewType,
                 roundDetails,

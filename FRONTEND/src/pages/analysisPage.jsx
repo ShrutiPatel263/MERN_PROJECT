@@ -71,13 +71,24 @@ const AnalysisPage = () => {
   const analyzeData = () => {
     if (posts.length === 0) return null;
 
-    // Most frequent companies
+    // Most frequent companies (normalize to avoid duplicates)
     const companyCount = {};
+    const companyNameMap = new Map(); // Map normalized -> original name
+    
     posts.forEach(post => {
-      companyCount[post.companyName] = (companyCount[post.companyName] || 0) + 1;
+      if (post.companyName) {
+        const normalized = post.companyName.trim();
+        if (normalized) {
+          // Store original name mapping (use first occurrence)
+          if (!companyNameMap.has(normalized)) {
+            companyNameMap.set(normalized, normalized);
+          }
+          companyCount[normalized] = (companyCount[normalized] || 0) + 1;
+        }
+      }
     });
     const topCompanies = Object.entries(companyCount)
-      .map(([name, count]) => ({ name, count }))
+      .map(([normalized, count]) => ({ name: companyNameMap.get(normalized) || normalized, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
 
@@ -151,21 +162,32 @@ const AnalysisPage = () => {
         return dateA - dateB;
       });
 
-    // Success rate by company
+    // Success rate by company (normalize to avoid duplicates)
     const companyResults = {};
+    const companyResultsNameMap = new Map(); // Map normalized -> original name
+    
     posts.forEach(post => {
-      if (!companyResults[post.companyName]) {
-        companyResults[post.companyName] = { total: 0, selected: 0 };
-      }
-      companyResults[post.companyName].total++;
-      if (post.results === 'Selected') {
-        companyResults[post.companyName].selected++;
+      if (post.companyName) {
+        const normalized = post.companyName.trim();
+        if (normalized) {
+          // Store original name mapping (use first occurrence)
+          if (!companyResultsNameMap.has(normalized)) {
+            companyResultsNameMap.set(normalized, normalized);
+          }
+          if (!companyResults[normalized]) {
+            companyResults[normalized] = { total: 0, selected: 0 };
+          }
+          companyResults[normalized].total++;
+          if (post.results === 'Selected') {
+            companyResults[normalized].selected++;
+          }
+        }
       }
     });
     const successRateByCompany = Object.entries(companyResults)
       .filter(([_, data]) => data.total >= 2) // Only companies with 2+ interviews
-      .map(([name, data]) => ({
-        name,
+      .map(([normalized, data]) => ({
+        name: companyResultsNameMap.get(normalized) || normalized,
         successRate: ((data.selected / data.total) * 100).toFixed(1),
         total: data.total
       }))

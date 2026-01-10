@@ -99,8 +99,18 @@ const Homepage = () => {
           setPosts(data.data);
           setFilteredPosts(data.data);
           
-          // Extract unique companies for filter
-          const uniqueCompanies = [...new Set(data.data.map(post => post.companyName))];
+          // Extract unique companies for filter (normalize to avoid duplicates)
+          const companyMap = new Map();
+          data.data.forEach(post => {
+            if (post.companyName) {
+              // Normalize: trim whitespace and convert to lowercase for comparison
+              const normalized = post.companyName.trim();
+              if (normalized && !companyMap.has(normalized)) {
+                companyMap.set(normalized, normalized);
+              }
+            }
+          });
+          const uniqueCompanies = Array.from(companyMap.values()).sort();
           setCompanies(uniqueCompanies);
         }
       } catch (err) {
@@ -121,7 +131,7 @@ const Homepage = () => {
                            post.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            post.topicsCovered.some(topic => topic.toLowerCase().includes(searchTerm.toLowerCase()));
       
-      const matchesCompany = !filters.company || post.companyName === filters.company;
+      const matchesCompany = !filters.company || post.companyName?.trim() === filters.company.trim();
       const matchesDifficulty = !filters.difficulty || post.difficultyLevel === filters.difficulty;
       const matchesInterviewType = !filters.interviewType || post.interviewType === filters.interviewType;
       
